@@ -18,10 +18,10 @@
 #include <vector>
 using namespace std;
 
-#define MAX_X 500
-#define MAX_Y 500
+#define MAX_X 5000
+#define MAX_Y 5000
 int n, r;
-int mmap[MAX_X + 5][MAX_Y + 5];
+//int mmap[MAX_X + 5][MAX_Y + 5];
 int s[MAX_X + 5][MAX_Y + 5];
 int x_len, y_len;
 
@@ -30,7 +30,9 @@ void input() {
     int x, y, w;
     for (int i = 0; i < n; i++) {
         cin >> x >> y >> w;
-        mmap[x][y] = w;
+        x += 1, y += 1;
+        if (s[x][y]) s[x][y] += w;
+        else s[x][y] = w;
         x_len = max(x_len, x);
         y_len = max(y_len, y);
     }
@@ -40,9 +42,10 @@ void input() {
 void init() {
     for (int i = 1; i <= x_len; i++) {
         for (int j = 1; j <= y_len; j++) {
-            s[i][j] = s[i - 1][j] + s[i][j - 1] - s[i - 1][j - 1] + mmap[i][j];
+            s[i][j] = s[i - 1][j] + s[i][j - 1] - s[i - 1][j - 1] + s[i][j];
         }
     }
+
     return ;
 }
 
